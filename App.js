@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
+import { Text, View, TextInput, Button,TouchableOpacity } from 'react-native';
 
 class App extends React.Component {
   state = {
@@ -21,44 +21,68 @@ class App extends React.Component {
   renderTodos = () =>{
     return this.state.todo.map(t=>{
         return (
+          <TouchableOpacity key={t}>
           <Text
-          key={t}
+          style={styles.todo}
           onPress={()=>{this.deleteTodo(t)}}
           >{t}</Text>
+          </TouchableOpacity>
         )
     })
   }
   render() {
     return (
-      <View style={styles.viewStyle}>
-        <Text>Add a task:</Text>
-        <TextInput
-            style={styles.inputStyle}
-            onChangeText={(text)=>this.setState({text})}
-            value={this.state.text}
-        />
-        <Button
-          title="Add todo"
-          color="green"
-          onPress={this.addTodo}
-        />
-        {this.renderTodos()}
+      <View style={styles.backgroundStyle}>
+        <View style={styles.viewStyle}>
+          <Text style={styles.header}>Add a task</Text>
+          <TextInput
+              style={styles.inputStyle}
+              onChangeText={(text)=>this.setState({text})}
+              value={this.state.text}
+          />
+          <Button
+            title="Add todo"
+            color="green"
+            onPress={this.addTodo}
+          />
+          <View style={{marginTop: 100}}/>
+          {this.renderTodos()}
+        </View>
       </View>
     )
   }
 }
 
 const styles = {
+  backgroundStyle: {
+    backgroundColor: "#ffd740",
+    flex: 1
+
+  },
   viewStyle: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: 50
   },
    inputStyle: {
      height: 40,
+     padding: 10,
+     borderRadius: 5,
+     margin: 10,
      width: 300,
-     borderColor: "green",
-     borderWidth: 1
+     backgroundColor: "white",
+     borderColor: "white",
+     borderWidth: 1,
+     margin: 20
+   },
+   header: {
+     fontSize:20,
+     color: 'white',
+     fontWeight: 'bold'
+   },
+   todo: {
+     fontSize: 18,
+     color: 'white'
    }
 }
 
